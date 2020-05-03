@@ -1,16 +1,28 @@
-# pytest-seleniumbase
+pytest-seleniumbase
+===================
 Browser UI test automation framework
 
-## setup 
+setup
+----- 
 
-### virtual env
-python3 -m venv ./venv
-chmod +x venv/bin/activate
-source venv/bin/activate
+seup virtual environment
 
-### install python libs
-pip install --upgrade pip
-pip install -r requirements.txt
+	python3 -m venv ./venv
+	chmod +x venv/bin/activate
+	source venv/bin/activate
 
-### run tests
-pytest tests/*
+
+install python libs
+
+	pip install --upgrade pip
+	pip install -r requirements.txt
+
+
+install selenium web drivers
+
+	seleniumbase install chromedriver latest
+	seleniumbase install firefoxdriver
+
+run
+---
+	pytest tests/* -s -vv --browser=firefox --pdb
