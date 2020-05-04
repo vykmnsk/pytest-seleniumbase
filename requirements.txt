@@ -1,4 +1,5 @@
 pytest
 pytest-ordering
 pyaml
+pdbpp
 seleniumbase
