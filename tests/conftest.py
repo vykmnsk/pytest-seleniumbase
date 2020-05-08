@@ -53,7 +53,7 @@ def homeUrlAuth(config, envName):
 
 @pytest.fixture(scope='session')
 def catUrl(homeUrl):
-    catUrl = 'my-account'
+    catUrl = 'account'
     return homeUrl + catUrl
 
 
