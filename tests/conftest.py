@@ -3,6 +3,24 @@ import pytest
 from yaml import load, BaseLoader
 
 
+def getEnvConfig(envName):
+    envConfig = None
+    fpath = os.path.sep.join(['.', 'config', 'envs.yml'])
+    with open(fpath) as f:
+        config = load(f, Loader=BaseLoader)
+        envConfig = config['env'][envName.lower()]
+    assert envConfig
+    assert isinstance(envConfig, dict)
+    return envConfig
+
+
+def pytest_configure(config):
+    if not config.option.proxy_string:
+        env = config.option.sutenv
+        envConfig = getEnvConfig(env)
+        config.option.proxy_string = envConfig['proxy']
+
+
 def pytest_addoption(parser):
     parser.addoption(
         "--sutenv",
@@ -24,15 +42,8 @@ def envName(request):
 
 
 @pytest.fixture(scope='session')
-def config(envName):
-    envConfig = None
-    fpath = os.path.sep.join(['.', 'config', 'envs.yml'])
-    with open(fpath) as f:
-        config = load(f, Loader=BaseLoader)
-        envConfig = config['env'][envName.lower()]
-    assert envConfig
-    assert isinstance(envConfig, dict)
-    return envConfig
+def envConfig(envName):
+    return getEnvConfig(envName)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -42,13 +53,13 @@ def sessionRun(envName):
 
 
 @pytest.fixture(scope='session')
-def homeUrl(config, envName):
-    return config['url']
+def homeUrl(envConfig, envName):
+    return envConfig['url']
 
 
 @pytest.fixture(scope='session')
-def homeUrlAuth(config, envName):
-    return config['url'] + '?context=auth'
+def homeUrlAuth(envConfig, envName):
+    return envConfig['url'] + '?context=auth'
 
 
 @pytest.fixture(scope='session')
@@ -58,5 +69,5 @@ def catUrl(homeUrl):
 
 
 @pytest.fixture(scope='session')
-def usrPwd(config, envName):
-    return (config['usr'], config['pwd'])
+def usrPwd(envConfig, envName):
+    return (envConfig['usr'], envConfig['pwd'])
