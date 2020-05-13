@@ -69,5 +69,11 @@ def catUrl(homeUrl):
 
 
 @pytest.fixture(scope='session')
+def subcatUrl(homeUrl):
+    subcatUrl = 'account/account-balance'
+    return homeUrl + subcatUrl
+
+
+@pytest.fixture(scope='session')
 def usrPwd(envConfig, envName):
     return (envConfig['usr'], envConfig['pwd'])

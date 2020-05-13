@@ -27,7 +27,7 @@ def test_nav_to_subcat(sb, homeUrl):
         assert len(alinks) > 0
         return alinks
 
-    alinks = retry(waitForLinks, 5, 1)
+    alinks = retry(waitForLinks, 3, 1)
     alinks[-1].click()
     assert (sb.get_current_url().endswith(subCatId))
 
