@@ -13,6 +13,6 @@ def retry(func, maxTries, sleepSeconds):
         try:
             return func()
         except AssertionError as err:
-            print(f'\n...tried {i} - {err}')
+            print(f'\n...tried {i}: {err}')
 
     pytest.fail(f"Exhausted {maxTries} attempts for previous errors")
