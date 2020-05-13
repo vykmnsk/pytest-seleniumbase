@@ -1,3 +1,4 @@
+import pytest
 from anytest import retry
 
 searchInput = 'input#search-autocomplete'
@@ -11,6 +12,7 @@ def test_search_box(sb, homeUrl):
     assert PLACEHOLDER == box.get_attribute("placeholder")
 
 
+@pytest.mark.new
 def test_search_results(sb, homeUrl):
     sb.open(homeUrl)
     sb.update_text(searchInput, 'bill')
