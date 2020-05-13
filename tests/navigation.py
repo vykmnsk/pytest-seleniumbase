@@ -1,5 +1,5 @@
 import pytest
-from anytest import TIMEOUT_MED, TIMEOUT_MAX
+from anytest import retry, TIMEOUT_MED, TIMEOUT_MAX
 
 catId = 'account'
 subCatId = 'account-balance'
@@ -20,7 +20,15 @@ def test_nav_to_subcat(sb, homeUrl):
     assert (sb.get_current_url().endswith(catId))
 
     sb.get_element(cssAccordion, timeout=TIMEOUT_MED).click()
-    sb.click_partial_link_text(TEXT_ALL_ARTICLES, timeout=TIMEOUT_MAX)
+
+    def waitForLinks():
+        vlinks = sb.find_visible_elements('a')
+        alinks = [vl for vl in vlinks if vl.text.startswith(TEXT_ALL_ARTICLES)]
+        assert len(alinks) > 0
+        return alinks
+
+    alinks = retry(waitForLinks, 5, 1)
+    alinks[-1].click()
     assert (sb.get_current_url().endswith(subCatId))
 
 
