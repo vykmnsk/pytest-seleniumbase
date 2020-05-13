@@ -25,4 +25,8 @@ install selenium web drivers
 
 run
 ---
-	pytest tests/* -s -vv --browser=firefox --pdb
+	pytest tests/* -v -m "not (mobile or desktop)" --sutenv=staging --headless --reuse-session
+
+	pytest tests/* -v -m mobile --browser=chrome --mobile
+
+	pytest tests/* -vv --browser=firefox --lf -s --pdb

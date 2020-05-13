@@ -12,13 +12,17 @@ HEADER_SITE = 'Help & Support'
 HEADER_HOME = 'What can we help you with?'
 
 
-def test_home_page_loaded(sb, homeUrl):
+def test_app_loaded(sb, homeUrl):
     sb.open(homeUrl)
     # sb.assert_no_404_errors()
+    sb.assert_element(appHome)
     pageTitle = sb.get_title()
     assert HEADER_SITE in pageTitle
     assert HEADER_HOME in pageTitle
-    sb.assert_element(appHome)
+
+
+def test_search_header(sb, homeUrl):
+    sb.open(homeUrl)
     sb.assert_text(HEADER_HOME, headerHome)
 
 
