@@ -44,13 +44,13 @@ def test_chat_header(sb):
     sb.assert_text(CHAT_HEADER, chatHeader)
 
 
+@pytest.mark.skip
 def test_chat_init_status(sb):
     sb.assert_element(chat, timeout=TIMEOUT_MAX)
     statusInit = sb.get_text(chatStatus)
     assert statusInit == CHAT_STATUS_LOADING
 
 
-@pytest.mark.new
 def test_chat_status_n_button(sb):
     sb.assert_element(chat, timeout=TIMEOUT_MAX)
     status = None

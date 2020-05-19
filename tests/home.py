@@ -23,7 +23,9 @@ def test_app_loaded(sb, homeUrl):
 
 def test_search_header(sb, homeUrl):
     sb.open(homeUrl)
-    sb.assert_text(HEADER_HOME, headerHome)
+    headers = sb.find_visible_elements(headerHome)
+    assert len(headers) == 1 #one is hidden
+    assert headers[0].text == HEADER_HOME
 
 
 @pytest.mark.desktop

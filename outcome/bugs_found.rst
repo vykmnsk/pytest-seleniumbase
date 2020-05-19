@@ -23,7 +23,7 @@ All browsers
 * double spaces in text copy
 * 5 microsite links pointing to the old H&S
 * distorted pre-existing Contact Us on screen re-size
-
+* placement tiles merge and diff sizes
 
 IE11
 
@@ -44,6 +44,7 @@ When developing
 * tile images missing data-ids
 * nested anchor tags
 * H2 is skipped
+* double H2 el (hidden and visible)
 
 
 When running tests
@@ -51,4 +52,5 @@ When running tests
 * CMS content lost labels after migration
 * typos in Headers
 * environment - lost CMS access
+* (Prod) Trending q-s dissapeared from categories
 
