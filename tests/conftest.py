@@ -5,7 +5,7 @@ from yaml import load, BaseLoader
 
 def getEnvConfig(envName):
     envConfig = None
-    fpath = os.path.sep.join(['.', 'config', 'envs.yml'])
+    fpath = os.path.sep.join(['.', 'secrets', 'envs.yml'])
     with open(fpath) as f:
         config = load(f, Loader=BaseLoader)
         envConfig = config['env'][envName.lower()]

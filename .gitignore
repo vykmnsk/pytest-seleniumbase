@@ -17,10 +17,11 @@ Pipfile.lock
 venv/
 venv.bak/
 
+# logs
 archived_logs/
 latest_logs/
 *.log
 
+# local
+secrets/
 .vscode
-
-config/
