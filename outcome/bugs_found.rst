@@ -53,4 +53,5 @@ When running tests
 * typos in Headers
 * environment - lost CMS access
 * (Prod) Trending q-s dissapeared from categories
+* IE11 jumbled up in mobile size
 

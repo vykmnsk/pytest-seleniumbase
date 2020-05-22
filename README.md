@@ -36,4 +36,4 @@ Local
 
 BrowserStack
 
-	pytest tests/* -m 'not login' --browser=remote --server=${BROWSERSTACK_USER}:${BROWSERSTACK_ACCESSKEY}@hub.browserstack.com --port=80 --cap_file=remote_caps/bs-ie11.py --sutenv=prod
+	pytest tests/* -m 'not login' --browser=remote --server=${BROWSERSTACK_USER}:${BROWSERSTACK_ACCESSKEY}@hub.browserstack.com --port=80 --cap_file=remote_caps/bs-ie11.py --maximize-window --sutenv=prod
