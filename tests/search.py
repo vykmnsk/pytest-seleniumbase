@@ -6,15 +6,13 @@ searchResult = 'div[role="combobox"]'
 PLACEHOLDER = 'Try: "How do I read my bill?"'
 
 
-def test_search_box(sb, homeUrl):
-    sb.open(homeUrl)
+def test_search_box(sb):
     box = sb.get_element(searchInput)
     assert PLACEHOLDER == box.get_attribute("placeholder")
 
 
 @pytest.mark.new
-def test_search_results(sb, homeUrl):
-    sb.open(homeUrl)
+def test_search_results(sb):
     sb.update_text(searchInput, 'bill')
 
     def assert_resultsDisplayed():

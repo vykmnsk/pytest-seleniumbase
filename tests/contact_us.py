@@ -29,11 +29,6 @@ PH_EMAIL_HEADER = 'Phone or email'
 PH_EMAIL_HREF_PART = '/contact.html'
 
 
-@pytest.fixture(scope="function", autouse=True)
-def openHome(sb, homeUrl):
-    sb.open(homeUrl)
-
-
 def test_contactus_header(sb):
     sb.assert_element(contactUs)
     assert HEADER == sb.get_text(contactUsHeader)

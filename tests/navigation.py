@@ -1,47 +1,58 @@
 import pytest
 from anytest import retry, TIMEOUT_MED, TIMEOUT_MAX
+from home import tileImages
 
-catId = 'account'
-subCatId = 'account-balance'
-# subCatName = 'Account balance'
-subCatName = 'account-balance'
 
-cssTile = f'a[href="/help-support/{catId}"] div.QuickLinkContainer'
-cssAccordion = f'div[label="{subCatName}"]'
+firstAccordion = '[data-id="accordion-group-0"]'
+firstArticle = '[data-id="subcategory-page-article-list0"]'
 TEXT_ALL_ARTICLES = 'Show all articles'
 
 cssCrumbs = 'ol.MuiBreadcrumbs-ol'
 cssCrumbLinks = f'{cssCrumbs} li.MuiBreadcrumbs-li a'
 
 
-def test_nav_to_subcat(sb, homeUrl):
-    sb.open(homeUrl)
-    sb.get_element(cssTile).click()
-    assert (sb.get_current_url().endswith(catId))
+def openCategoryPage(sb):
+    sb.click(tileImages)
+    sb.assert_element_visible(firstAccordion)
 
-    sb.get_element(cssAccordion, timeout=TIMEOUT_MED).click()
 
-    def waitForLinks():
+def openSubcategoryPage(sb):
+    sb.click(firstAccordion)
+
+    def waitForArticleLinks():
         vlinks = sb.find_visible_elements('a')
         alinks = [vl for vl in vlinks if vl.text.startswith(TEXT_ALL_ARTICLES)]
         assert len(alinks) > 0
         return alinks
 
-    alinks = retry(waitForLinks, 3, 1)
+    alinks = retry(waitForArticleLinks, 3, 1)
     alinks[-1].click()
-    assert (sb.get_current_url().endswith(subCatId))
+    sb.assert_element_visible(firstArticle)
+
+
+def test_check_page_headers(sb):
+    def assert_headerStructure():
+        assert len(sb.find_visible_elements('h1')) == 1
+        assert len(sb.find_visible_elements('h3')) >= 1
+
+    assert_headerStructure()
+    openCategoryPage(sb)
+    assert_headerStructure()
+    openSubcategoryPage(sb)
+    assert_headerStructure()
 
 
 @pytest.mark.desktop
-def test_nav_back_from_subcat(sb, homeUrl):
-    sb.open(homeUrl + f'{catId}/{subCatId}')
+def test_nav_to_from_subcat(sb, homeUrl):
+    openCategoryPage(sb)
+    openSubcategoryPage(sb)
 
     sb.assert_element_visible(cssCrumbs)
     crumbLinks3 = sb.find_elements(cssCrumbLinks)
     assert len(crumbLinks3) == 3
     crumbLinks3[1].click()
 
-    assert (sb.get_current_url().endswith(catId))
+    sb.assert_element_visible(firstAccordion)
     sb.assert_element_visible(cssCrumbs)
     crumbLinks2 = sb.find_elements(cssCrumbLinks)
     assert len(crumbLinks2) == 2

@@ -1,5 +1,5 @@
 import pytest
-from anytest import retry
+from anytest import retry, TIMEOUT_MED
 
 
 username = "[data-id='login_usernameInput']"
@@ -9,15 +9,17 @@ loginUrl = '/login'
 
 callAction = '[data-id="callToActionCard"]'
 callActionButton = f'{callAction} button'
+
 LABEL_LOG_IN = 'Log in'
 LABEL_LOGGED_IN = 'Get in touch'
 FORM_HEADER_LOGIN = 'Log in to My Account'
 TEXT_LOG_IN = "Log in for help and support we've tailored for you."
 TEXT_LOGGED_IN = "Couldn’t find your answer? Send us a message, we’ll come back to you."
+HEADER_ACCOUNT = 'My Account'
+LABEL_HELP = 'Help'
 
-
-def enterLoginCreds(sb, usrPwd):
-    usr, pwd = usrPwd
+def enterLoginCreds(sb):
+    usr, pwd = sb.data.split(':')
 
     def assert_loginURL():
         assert loginUrl in sb.get_current_url()
@@ -33,20 +35,18 @@ def enterLoginCreds(sb, usrPwd):
     retry(assert_notLoginURL, 5, 1)
 
 
-def test_login_box(sb, homeUrl):
-    sb.open(homeUrl)
+def test_login_box(sb):
     assert LABEL_LOG_IN == sb.get_text(callActionButton)
     assert TEXT_LOG_IN in sb.get_text(callAction)
 
 
 @pytest.mark.last
 @pytest.mark.login
-def test_loging_in(sb, homeUrl, usrPwd):
-    sb.open(homeUrl)
+def test_log_in(sb):
     sb.click_link_text(LABEL_LOG_IN, callActionButton)
-    enterLoginCreds(sb, usrPwd)
-    sb.sleep(5)
-    sb.open(homeUrl)
+    enterLoginCreds(sb)
+    sb.wait_for_text(HEADER_ACCOUNT)
+    sb.click_partial_link_text(LABEL_HELP)
     assert LABEL_LOGGED_IN == sb.get_text(callActionButton)
     assert TEXT_LOGGED_IN in sb.get_text(callAction)
 

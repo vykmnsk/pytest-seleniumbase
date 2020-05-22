@@ -1,4 +1,5 @@
 import pytest
+from navigation import openCategoryPage
 
 bar = 'div[data-id="action-bar"]'
 headerDesktop_home = f'{bar} h1[data-id="actionbar-heading-desktop"]'
@@ -10,42 +11,34 @@ HEADER = 'Help & Support'
 
 
 @pytest.mark.desktop
-def test_header_desktop(sb, homeUrl):
-    sb.open(homeUrl)
+def test_header_desktop(sb):
     sb.assert_text(HEADER, headerDesktop_home)
     sb.assert_element_not_visible(headerMobile_home)
     sb.assert_element_not_visible(buttonBack)
 
 
 @pytest.mark.mobile
-def test_mobile_header_no_back_btn_home(sb, homeUrl):
-    sb.open(homeUrl)
+def test_mobile_header_no_back_btn_home(sb):
     sb.assert_text(HEADER, headerMobile_home)
     sb.assert_element_not_visible(headerDesktop_home)
     sb.assert_element_not_visible(buttonBack)
 
 
 @pytest.mark.mobile
-def test_mobile_header_back_btn_cat_page(sb, catUrl):
-    sb.open(catUrl)
+def test_mobile_header_back_btn_cat_page(sb):
+    openCategoryPage(sb)
     sb.assert_text(HEADER, headerMobile_cat)
     sb.assert_element_not_visible(headerDesktop_cat)
     sb.assert_element_visible(buttonBack)
 
 
 @pytest.mark.mobile
-def test_tap_back_btn(sb, catUrl, homeUrl):
+def test_tap_back_btn(sb, homeUrl):
     pytest.xfail("back btn doesn't work with proxy")
-    sb.open(catUrl)
+    openCategoryPage(sb)
     sb.assert_element_visible(buttonBack)
     breakpoint()
     sb.click(buttonBack)
     assert sb.get_current_url() == homeUrl
 
 
-@pytest.mark.new
-def test_header_tags(sb, homeUrl, catUrl, subcatUrl):
-    for url in [homeUrl, catUrl, subcatUrl]:
-        sb.open(url)
-        assert len(sb.find_visible_elements('h1')) == 1
-        assert len(sb.find_visible_elements('h3')) >= 1

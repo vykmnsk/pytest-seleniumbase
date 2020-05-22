@@ -16,6 +16,7 @@ Pipfile.lock
 # Environments
 venv/
 venv.bak/
+env/
 
 # logs
 archived_logs/

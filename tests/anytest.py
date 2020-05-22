@@ -16,3 +16,8 @@ def retry(func, maxTries, sleepSeconds):
             print(f'\n...tried {i}: {err}')
 
     pytest.fail(f"Exhausted {maxTries} attempts for previous errors")
+
+
+def emulateAuth(sb):
+	authUrl = sb.get_current_url() + '?context=auth'
+	sb.open(authUrl)
