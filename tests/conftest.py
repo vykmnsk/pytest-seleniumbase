@@ -1,6 +1,6 @@
 import os
 import pytest
-from yaml import load, BaseLoader
+from datetime import datetime
 
 
 def pytest_addoption(parser):
@@ -30,7 +30,8 @@ def envName(request):
 
 @pytest.fixture(scope="session", autouse=True)
 def sessionRun(envName):
-    yield
-    print(f"\n\nSuT Env: {envName}")
+    time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"\n\nSuT env: {envName} @ {time}")
+
 
 

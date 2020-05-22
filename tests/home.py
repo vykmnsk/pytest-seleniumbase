@@ -2,7 +2,7 @@ import pytest
 from anytest import TIMEOUT_MED
 
 appHome = '[data-id="home"]'
-headerHome = 'h2[data-id="title"]'
+headerHome = 'h2[data-id="search-banner-title"]'
 tileContainer = 'div[data-id="quicklink-container"]'
 tileImages = f'{tileContainer} svg'
 
