@@ -35,6 +35,7 @@ def enterLoginCreds(sb):
     retry(assert_notLoginURL, 5, 1)
 
 
+@pytest.mark.new
 def test_login_box(sb):
     assert LABEL_LOG_IN == sb.get_text(callActionButton)
     assert TEXT_LOG_IN in sb.get_text(callAction)

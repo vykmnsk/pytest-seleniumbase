@@ -10,8 +10,9 @@ HEADER_UNAUTH = 'Trending questions'
 HEADER_AUTH = 'You may also like'
 
 
-def test_header_unauth(sb):
-    assert HEADER_UNAUTH == sb.get_text(header)
+def assertQuestionsCount(sb, count):
+    sb.assert_element(trending)
+    assert len(sb.find_visible_elements(questions)) == count
 
 
 def test_header_auth(sb):
@@ -19,9 +20,8 @@ def test_header_auth(sb):
     assert HEADER_AUTH == sb.get_text(header)
 
 
-def test_questions_count_category_page(sb):
-    openCategoryPage(sb)
-    assertQuestionsCount(sb, 3)
+def test_header_unauth(sb):
+    assert HEADER_UNAUTH == sb.get_text(header)
 
 
 @pytest.mark.desktop
@@ -34,6 +34,17 @@ def test_questions_count_home_mobile(sb):
     assertQuestionsCount(sb, 3)
 
 
-def assertQuestionsCount(sb, count):
-    sb.assert_element(trending)
-    assert len(sb.find_visible_elements(questions)) == count
+def test_header_category_page(sb):
+    openCategoryPage(sb)
+    sb.assert_element(header)
+
+
+def test_questions_count_category_page(sb):
+    openCategoryPage(sb)
+    assertQuestionsCount(sb, 3)
+
+
+
+
+
+

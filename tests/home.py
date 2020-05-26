@@ -3,6 +3,7 @@ from anytest import TIMEOUT_MED
 
 appHome = '[data-id="home"]'
 headerHome = 'h2[data-id="search-banner-title"]'
+searchDescr = 'span[data-id="description"]'
 tileContainer = 'div[data-id="quicklink-container"]'
 tileImages = f'{tileContainer} svg'
 
@@ -26,6 +27,10 @@ def test_search_header(sb):
     assert headers[0].text == HEADER_HOME
 
 
+def test_search_description(sb):
+    assert len(sb.get_text(searchDescr)) <= 100
+
+
 @pytest.mark.desktop
 def test_home_page_headers(sb):
     sb.assert_text(HEADER_SITE, headerHomeDesktop, timeout=TIMEOUT_MED)
@@ -47,9 +52,5 @@ def test_tiles_not_same(sb):
     assert uniqImagesCount == 8
 
 
-@pytest.mark.desktop
-def test_header_desktop(sb):
-    searchDescr = sb.get_element('div[data-id="description"]').text
-    assert len(searchDescr) <= 100
 
 

@@ -24,6 +24,13 @@ def test_mobile_header_no_back_btn_home(sb):
     sb.assert_element_not_visible(buttonBack)
 
 
+@pytest.mark.desktop
+def test_header_non_home_desktop(sb):
+    openCategoryPage(sb)
+    sb.assert_element_not_visible(headerMobile_home)
+    sb.assert_element_not_visible(buttonBack)
+
+
 @pytest.mark.mobile
 def test_mobile_header_back_btn_cat_page(sb):
     openCategoryPage(sb)
@@ -37,7 +44,6 @@ def test_tap_back_btn(sb, homeUrl):
     pytest.xfail("back btn doesn't work with proxy")
     openCategoryPage(sb)
     sb.assert_element_visible(buttonBack)
-    breakpoint()
     sb.click(buttonBack)
     assert sb.get_current_url() == homeUrl
 
