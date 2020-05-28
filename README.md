@@ -25,14 +25,22 @@ install selenium web drivers
 
 run
 ---
+Set SuT environment
+
+	export PYTEST_ADDOPTS="--sutenv=[SUT_LABEL]
+	--start-page=[SITE_URL]
+	--proxy=[SERVER]:[PORT]
+	--data=[USERNAME]:[PASSWORD]
+
+	(optionally create .sh files for dev, test, staging, prod in ./env)
 
 Local
 
-	pytest tests/* -v -m "not (mobile or desktop)" --sutenv=staging --headless --reuse-session
+	pytest -m "not (mobile or desktop)"  --headless --reuse-session
 
-	pytest tests/* -v -m mobile --browser=chrome --mobile
+	pytest -m mobile --browser=chrome --mobile
 
-	pytest tests/* -vv --browser=firefox --lf -s --pdb
+	pytest -vv --browser=firefox --last-failed -s --pdb
 
 BrowserStack
 
