@@ -10,6 +10,8 @@ TEXT_ALL_ARTICLES = 'Show all articles'
 cssCrumbs = 'ol.MuiBreadcrumbs-ol'
 cssCrumbLinks = f'{cssCrumbs} li.MuiBreadcrumbs-li a'
 
+articleFeedback = '[data-id="feedback-label"]'
+
 
 def openCategoryPage(sb):
     sb.click(tileImages)
@@ -30,6 +32,11 @@ def openSubcategoryPage(sb):
     sb.assert_element_visible(firstArticle)
 
 
+def openArticlePage(sb):
+    sb.click(firstArticle)
+    sb.assert_element_visible(articleFeedback)
+
+
 def test_check_page_headers(sb):
     def assert_headerStructure():
         assert len(sb.find_visible_elements('h1')) == 1
@@ -39,6 +46,8 @@ def test_check_page_headers(sb):
     openCategoryPage(sb)
     assert_headerStructure()
     openSubcategoryPage(sb)
+    assert_headerStructure()
+    openArticlePage(sb)
     assert_headerStructure()
 
 
@@ -61,3 +70,5 @@ def test_nav_to_from_subcat(sb, homeUrl):
     assert sb.get_current_url() in homeUrl
     crumbLinks0 = sb.find_elements(cssCrumbLinks)
     assert len(crumbLinks0) == 0
+
+
