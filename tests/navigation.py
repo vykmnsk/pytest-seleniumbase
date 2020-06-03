@@ -10,6 +10,7 @@ TEXT_ALL_ARTICLES = 'Show all articles'
 cssCrumbs = 'ol.MuiBreadcrumbs-ol'
 cssCrumbLinks = f'{cssCrumbs} li.MuiBreadcrumbs-li a'
 
+articleScreen = '[data-id="article"]'
 articleFeedback = '[data-id="feedback-label"]'
 
 
@@ -27,13 +28,14 @@ def openSubcategoryPage(sb):
         assert len(alinks) > 0
         return alinks
 
-    alinks = retry(waitForArticleLinks, 3, 1)
+    alinks = retry(waitForArticleLinks, 10, 1)
     alinks[-1].click()
     sb.assert_element_visible(firstArticle)
 
 
 def openArticlePage(sb):
     sb.click(firstArticle)
+    sb.assert_element_visible(articleScreen)
     sb.assert_element_visible(articleFeedback)
 
 

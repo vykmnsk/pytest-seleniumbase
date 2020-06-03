@@ -55,4 +55,5 @@ When running tests
 * (Prod) Trending q-s dissapeared from categories
 * IE11 jumbled up in mobile size
 * Large search description was not capped at 100 ch 
+* spaces before special chars in search results
 
