@@ -18,8 +18,9 @@ def test_search_results_display_3(sb):
     assert len(results) == 3
 
 
-@pytest.mark.parametrize('criteria', ['pay', 'bill', 'meter', 'solar'])
-def test_find_article(sb, criteria):
+@pytest.mark.skip
+@pytest.mark.parametrize('criteria', ['gas', 'electricity', 'lpg', 'account', 'help', 'origin', 'debit', 'hardship'])
+def test_search_result_matches_article_title(sb, criteria):
     results = search(sb, criteria)
     pick = randrange(len(results))
     result = results[pick]
@@ -38,3 +39,8 @@ def search(sb, criteria):
     retry((assert_resultsDisplayed), 6, 1)
     return sb.find_elements(searchResults)
 
+
+def searchPickTop(sb, criteria):
+    results = search(sb, criteria)
+    assert len(results) > 0
+    sb.add_text(searchInput, '\n')
