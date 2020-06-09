@@ -18,8 +18,8 @@ def test_search_results_display_3(sb):
     assert len(results) == 3
 
 
-@pytest.mark.skip
-@pytest.mark.parametrize('criteria', ['gas', 'electricity', 'lpg', 'account', 'help', 'origin', 'debit', 'hardship'])
+@pytest.mark.xfail
+@pytest.mark.parametrize('criteria', ['help', 'account', ])
 def test_search_result_matches_article_title(sb, criteria):
     results = search(sb, criteria)
     pick = randrange(len(results))
@@ -34,7 +34,7 @@ def search(sb, criteria):
     def assert_resultsDisplayed():
         results = sb.get_element(searchResult)
         assert results.get_attribute('aria-expanded') == 'true'
-    
+
     sb.update_text(searchInput, criteria)
     retry((assert_resultsDisplayed), 6, 1)
     return sb.find_elements(searchResults)

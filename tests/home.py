@@ -14,7 +14,6 @@ HEADER_HOME = 'What can we help you with?'
 
 
 def test_site_loaded(sb):
-    # sb.assert_no_404_errors()
     sb.assert_element(appHome)
     pageTitle = sb.get_title()
     assert HEADER_SITE in pageTitle
@@ -23,7 +22,7 @@ def test_site_loaded(sb):
 
 def test_search_header(sb):
     headers = sb.find_visible_elements(headerHome)
-    assert len(headers) == 1 #one is hidden
+    assert len(headers) == 1  # one is hidden
     assert headers[0].text == HEADER_HOME
 
 
@@ -42,7 +41,7 @@ def test_tiles_count(sb):
     assert len(tiles) == 8
 
 
-@pytest.mark.skip
+@pytest.mark.xfail
 def test_tiles_not_same(sb):
     sb.assert_element(tileContainer, timeout=TIMEOUT_MED)
     imgLabels = [
@@ -50,7 +49,3 @@ def test_tiles_not_same(sb):
         for e in sb.find_elements(tileImages)]
     uniqImagesCount = len(set(imgLabels))
     assert uniqImagesCount == 8
-
-
-
-

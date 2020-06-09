@@ -31,6 +31,7 @@ def test_check_all_page_types_headers(sb):
     assert_headerStructure()
     openArticlePage(sb)
     assert_headerStructure()
+    sb.assert_no_404_errors()
 
 
 def test_article_feedback(sb, homeUrl):
